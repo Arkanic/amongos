@@ -86,7 +86,7 @@ void set_cursor_offset(int offset) {
     port_byte_out(REG_SCREEN_DATA, (unsigned char)(offset & 0xff));
 }
 
-void clrscr() {
+void clrscr(void) {
     int screen_size = MAX_COLS * MAX_ROWS;
     int i;
     char *screen = VIDEO_ADDRESS;

@@ -3,26 +3,30 @@ HEADERS=$(wildcard kernel/*.h drivers/*.h)
 
 OBJ=${C_SOURCES:.c=.o}
 
+CC=/usr/local/i386elfgcc/bin/i386-elf-gcc
+LD=/usr/local/i386elfgcc/bin/i386-elf-ld
+GDB=/usr/local/i386elfgcc/bin/i386-elf-gdb
+
 CFLAGS=-g
 
 os.bin: boot/boot.bin kernel.bin
 	cat $^ > os.bin
 
 kernel.bin: boot/kernel_entry.o ${OBJ}
-	i386-elf-ld -o $@ -Ttext 0x1000 $^ --oformat binary
+	${LD} -o $@ -Ttext 0x1000 $^ --oformat binary
 
 kernel.elf: boot/kernel_entry.o ${OBJ}
-	i386-elf-ld -o $@ -Ttext 0x1000 $^
+	${LD} -o $@ -Ttext 0x1000 $^
 
 run: os.bin
 	qemu-system-i386 -fda os.bin
 
 debug: os.bin kernel.elf
 	qemu-system-i386 -s -fda os.bin &
-	i386-elf-gdb -ex "target remote localhost:1234" -ex "symbol-file kernel.elf"
+	${GDB} -ex "target remote localhost:1234" -ex "symbol-file kernel.elf"
 
 %.o: %.c ${HEADERS}
-	i386-elf-gcc ${CFLAGS} -ffreestanding -c $< -o $@
+	${CC} ${CFLAGS} -ffreestanding -c $< -o $@
 
 %.o: %.s
 	nasm $< -f elf -o $@

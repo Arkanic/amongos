@@ -34,7 +34,8 @@ void kprint(char *message) {
 void kprint_backspace(void) {
     int offset = get_cursor_offset();
     int row = get_offset_row(offset), col = get_offset_col(offset);
-    print_char(0x08, col, row, WHITE_ON_BLACK);
+    print_char(' ', col, row, WHITE_ON_BLACK);
+    set_cursor_offset(get_offset(col, row));
 }
 
 int print_char(char c, int col, int row, char attr) {

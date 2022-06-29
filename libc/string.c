@@ -16,7 +16,6 @@ void int_to_ascii(int n, char str[]) {
 }
 
 void hex_to_ascii(int n, char str[]) {
-    str = "";
     append(str, '0');
     append(str, 'x');
     char zeroes = 0;

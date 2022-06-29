@@ -19,9 +19,9 @@ void user_input(char *input) {
     } else if(strcmp(input, "PAGE") == 0) {
         u32 phys_addr;
         u32 page = kmalloc(1000, 1, &phys_addr);
-        char page_str[16];
+        char page_str[16] = "";
         hex_to_ascii(page, page_str);
-        char phys_str[16];
+        char phys_str[16] = "";
         hex_to_ascii(phys_addr, phys_str);
         
         kprint("page: ");

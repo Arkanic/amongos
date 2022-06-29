@@ -7,7 +7,7 @@ CC=/usr/local/i386elfgcc/bin/i386-elf-gcc
 LD=/usr/local/i386elfgcc/bin/i386-elf-ld
 GDB=/usr/local/i386elfgcc/bin/i386-elf-gdb
 
-CFLAGS=-g
+CFLAGS=-g -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostarfiles -nodefaultlibs -Wall -Wextra -Werror
 
 os.bin: boot/boot.bin kernel.bin
 	cat $^ > os.bin

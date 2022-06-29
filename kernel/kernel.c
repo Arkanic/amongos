@@ -12,7 +12,7 @@ void main(void) {
 }
 
 void user_input(char *input) {
-    if(strcmp(input, "end") == 0) {
+    if(strcmp(input, "END") == 0) {
         kprint("among os got ejected!!!!! (sussy)\n");
         asm volatile("hlt");
     }

@@ -1,4 +1,4 @@
-.global _start
+global _start
 
 [bits 32]
 [extern main]

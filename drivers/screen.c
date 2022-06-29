@@ -34,8 +34,7 @@ void kprint(char *message) {
 void kprint_backspace(void) {
     int offset = get_cursor_offset();
     int row = get_offset_row(offset), col = get_offset_col(offset);
-    print_char(' ', col, row, WHITE_ON_BLACK);
-    set_cursor_offset(get_offset(col, row));
+    print_char(0x08, col, row, WHITE_ON_BLACK);
 }
 
 int print_char(char c, int col, int row, char attr) {
@@ -93,16 +92,20 @@ void set_cursor_offset(int offset) {
     port_byte_out(REG_SCREEN_DATA, (unsigned char)(offset & 0xff));
 }
 
-void clrscr(void) {
+void clrscr_c(char c) {
     int screen_size = MAX_COLS * MAX_ROWS;
     int i;
     char *screen = VIDEO_ADDRESS;
 
     for (i = 0; i < screen_size; i++) {
-        screen[i*2] = ' ';
+        screen[i*2] = c;
         screen[i*2+1] = WHITE_ON_BLACK;
     }
     set_cursor_offset(get_offset(0, 0));
+}
+
+void clrscr(void) {
+    clrscr_c(' ');
 }
 
 

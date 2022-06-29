@@ -5,8 +5,12 @@
 #include "../libc/mem.h"
 
 void main(void) {
+    clrscr_c(0x08);
+
     isr_install();
     irq_install();
+
+    clrscr();
 
     kprint("AMONG OS\n");
     kprint("type end to finish the suffering, page to do some funny memory things\n> ");

@@ -6,7 +6,7 @@
 #include "../libc/function.h"
 #include "../kernel/kernel.h"
 
-#define BACKSPACE 0x0e
+#define BACKSPACE 0xe
 #define ENTER 0x1c
 
 static char key_buffer[256];
@@ -43,13 +43,6 @@ static void keyboard_callback(registers_t regs) {
         append(key_buffer, letter);
         kprint(str);
     }
-
-    char sc[6];
-    int_to_ascii(scancode, sc);
-    kprint("\nscancode: ");
-    kprint(sc);
-    kprint("\n");
-
     UNUSED(regs);
 }
 

@@ -1,6 +1,6 @@
 #include "screen.h"
-#include "ports.h"
-#include "../kernel/util.h"
+#include "../cpu/ports.h"
+#include "../libc/mem.h"
 
 int get_cursor_offset();
 void set_cursor_offset(int offset);
@@ -29,6 +29,12 @@ void kprint_at(char *message, int col, int row) {
 
 void kprint(char *message) {
     kprint_at(message, -1, -1);
+}
+
+void kprint_backspace(void) {
+    int offset = get_cursor_offset();
+    int row = get_offset_row(offset), col = get_offset_col(offset);
+    print_char(0x08, col, row, WHITE_ON_BLACK);
 }
 
 int print_char(char c, int col, int row, char attr) {

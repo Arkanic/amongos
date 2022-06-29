@@ -1,12 +1,22 @@
 #include "../cpu/isr.h"
-#include "../cpu/timer.h"
-#include "../drivers/keyboard.h"
+#include "../drivers/screen.h"
+#include "kernel.h"
+#include "../libc/string.h"
 
 void main(void) {
     isr_install();
+    irq_install();
 
-    asm volatile("sti");
-    init_timer(50);
+    kprint("AMONG OS\n");
+    kprint("type end to finish the suffering\n> ");
+}
 
-    init_keyboard();
+void user_input(char *input) {
+    if(strcmp(input, "end") == 0) {
+        kprint("among os got ejected!!!!! (sussy)\n");
+        asm volatile("hlt");
+    }
+    kprint("You said: ");
+    kprint(input);
+    kprint("\n> ");
 }

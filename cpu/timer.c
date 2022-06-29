@@ -22,3 +22,7 @@ void init_timer(u32 freq) {
     port_byte_out(0x40, low);
     port_byte_out(0x40, high);
 }
+
+u32 get_ticks(void) {
+    return tick;
+}

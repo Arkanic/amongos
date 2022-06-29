@@ -1,12 +1,11 @@
 #include "../cpu/isr.h"
+#include "../cpu/timer.h"
 #include "../drivers/screen.h"
 #include "kernel.h"
 #include "../libc/string.h"
 #include "../libc/mem.h"
 
-void main(void) {
-    clrscr_c(0x08);
-
+void kernel_main(void) {
     isr_install();
     irq_install();
 
@@ -34,6 +33,13 @@ void user_input(char *input) {
 
         kprint("physical address: ");
         kprint(phys_str);
+        kprint("\n");
+    } else if(strcmp(input, "TICK") == 0) {
+        u32 ticks = get_ticks();
+        char ticks_str[16] = "";
+        int_to_ascii(ticks, ticks_str);
+        kprint("ticks: ");
+        kprint(ticks_str);
         kprint("\n");
     }
     kprint("You said: ");

@@ -1,4 +1,7 @@
+.global _start
+
 [bits 32]
 [extern main]
-call main
+_start:
+call kernel_main
 jmp $

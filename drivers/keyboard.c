@@ -44,6 +44,12 @@ static void keyboard_callback(registers_t regs) {
         kprint(str);
     }
 
+    char sc[6];
+    int_to_ascii(scancode, sc);
+    kprint("\nscancode: ");
+    kprint(sc);
+    kprint("\n");
+
     UNUSED(regs);
 }
 

@@ -1,39 +1,17 @@
-C_SOURCES=$(wildcard kernel/*.c drivers/*.c cpu/*.c libc/*.c)
-HEADERS=$(wildcard kernel/*.h drivers/*.h cpu/*.h libc/*.h)
+SFLAGS=-O0 -w+orphan-labels
 
-OBJ=${C_SOURCES:.c=.o cpu/interrupt.o}
+qemu: among.flp
+	qemu-system-i386 -fda among.flp -nographic
 
-CC=/usr/local/i386elfgcc/bin/i386-elf-gcc
-LD=/usr/local/i386elfgcc/bin/i386-elf-ld
-GDB=/usr/local/i386elfgcc/bin/i386-elf-gdb
+among.flp: system/boot/boot.bin system/among.bin
+	rm among.flp || true
+	mkdosfs -C among.flp 1440
 
-CFLAGS=-g -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra
-
-os.bin: boot/boot.bin kernel.bin
-	cat $^ > os.bin
-
-kernel.bin: boot/kernel_entry.o ${OBJ}
-	${LD} -o $@ -Ttext 0x1000 $^ --oformat binary
-
-kernel.elf: boot/kernel_entry.o ${OBJ}
-	${LD} -o $@ -Ttext 0x1000 $^
-
-run: os.bin
-	qemu-system-i386 -fda os.bin
-
-debug: os.bin kernel.elf
-	qemu-system-i386 -s -fda os.bin &
-	${GDB} -ex "target remote localhost:1234" -ex "symbol-file kernel.elf"
-
-%.o: %.c ${HEADERS}
-	${CC} ${CFLAGS} -ffreestanding -c $< -o $@
-
-%.o: %.s
-	nasm $< -f elf -o $@
+	dd conv=notrunc status=noxfer if=system/boot/boot.bin of=among.flp
+	mcopy -i among.flp system/among.bin ::
 
 %.bin: %.s
-	nasm $< -f bin -o $@
+	nasm ${SFLAGS} $< -f bin -o $@
 
 clean:
-	rm -rf *.bin *.dis *.o os.bin *.elf
-	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o cpu/*.o libc/*.o
+	rm *.flp system/*.bin system/boot/*.bin || true

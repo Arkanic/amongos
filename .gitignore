@@ -1,9 +1,4 @@
-*.bin
-*.dis
-*.o
-os.bin
-*.elf
-kernel/*.o
-boot/*.bin
-drivers/*.o
-boot/*.o
+among.flp
+
+*/*.bin
+*/*/*.bin

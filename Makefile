@@ -1,4 +1,4 @@
-SFLAGS=-O0 -w+orphan-labels
+SFLAGS=
 
 qemu: among.flp
 	qemu-system-i386 -fda among.flp -nographic
@@ -9,6 +9,7 @@ among.flp: system/boot/boot.bin system/among.bin
 
 	dd conv=notrunc status=noxfer if=system/boot/boot.bin of=among.flp
 	mcopy -i among.flp system/among.bin ::
+
 
 %.bin: %.s
 	nasm ${SFLAGS} $< -f bin -o $@

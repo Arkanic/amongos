@@ -548,6 +548,8 @@ os_draw_background:
 	push bx
 	push cx
 
+	call os_clear_screen
+
 	mov dl, 0
 	mov dh, 0
 	call os_move_cursor

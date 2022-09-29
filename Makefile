@@ -1,4 +1,4 @@
-SFLAGS=-O0
+SFLAGS=-O0 -w+orphan-labels
 
 PROG_DIR:=./programs
 PROG_SRC_FILES:=$(wildcard $(PROG_DIR)/*.s)
@@ -9,8 +9,11 @@ LOOSE_FILES:=$(wildcard $(LOOSE_DIR)/*.*)
 
 all: clean qemu
 
-qemu: .tmp
-	qemu-system-i386 -fda among.flp -nographic
+qemu: among.iso
+	qemu-system-i386 -cdrom among.iso -nographic
+
+among.iso: .tmp
+	mkisofs -quiet -V "AMONGOS" -input-charset iso8859-1 -o among.iso -b among.flp .
 
 .tmp: among.flp $(PROG_BIN_FILES)
 	touch .tmp
@@ -33,4 +36,4 @@ $(PROG_DIR)/%.bin: $(PROG_DIR)/%.s
 	mcopy -i among.flp $@ ::
 
 clean:
-	rm .tmp *.flp system/*.bin system/boot/*.bin programs/*.bin || true
+	rm .tmp *.flp *.iso system/*.bin system/boot/*.bin programs/*.bin || true

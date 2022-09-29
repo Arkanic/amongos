@@ -2,6 +2,20 @@
 %include "./programs/libsus.inc"
 [org 32768]
 
+init_start:
+	mov dh, 1
+	mov dl, 0
+	call os_move_cursor
+
+	mov si, init_msg
+	call os_print_string
+
+	call os_wait_for_key
+
+	jmp main_start
+
+init_msg: db "Crewmate file viewer", 13, 10, ".TXT and .PCX supported, pick a file to continue", 13, 10, 13, 10, "PRESS ANY KEY TO CONTINUE", 0
+
 
 main_start:
 	call draw_background
@@ -11,7 +25,6 @@ main_start:
 	jc near close
 
 	mov bx, ax
-
 	mov di, ax
 
 	call os_string_length
@@ -40,7 +53,6 @@ main_start:
 	call os_dialog_box
 
 	jmp main_start
-
 
 valid_pcx_extension:
 	mov ax, bx

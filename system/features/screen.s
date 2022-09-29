@@ -284,7 +284,7 @@ os_list_dialog:
 	mov byte [.num_of_entries], cl
 
 
-	mov bl, 01001111b		; White on red
+	mov bl, 00011111b		; White on red
 	mov dl, 20			; Start X position
 	mov dh, 2			; Start Y position
 	mov si, 40			; Width
@@ -700,7 +700,7 @@ os_input_dialog:
 	mov ah, 09h
 	mov bh, 0
 	mov cx, 55
-	mov bl, 01001111b		; White on red
+	mov bl, 00011111b		; White on red
 	mov al, ' '
 	int 10h
 	popa
@@ -757,7 +757,7 @@ os_dialog_box:
 	mov ah, 09h
 	mov bh, 0
 	mov cx, 42
-	mov bl, 01001111b		; White on red
+	mov bl, 00011111b		; White on red
 	mov al, ' '
 	int 10h
 	popa
@@ -878,7 +878,7 @@ os_dialog_box:
 	mov si, .ok_button_string
 	call os_print_string
 
-	mov bl, 01001111b		; White on red for cancel button
+	mov bl, 00011111b		; White on red for cancel button
 	mov dh, 14
 	mov dl, 42
 	mov si, 9
@@ -900,7 +900,7 @@ os_dialog_box:
 	jne .noright
 
 
-	mov bl, 01001111b		; Black on white
+	mov bl, 00011111b		; Black on white
 	mov dh, 14
 	mov dl, 27
 	mov si, 8

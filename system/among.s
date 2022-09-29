@@ -132,7 +132,7 @@ app_selector:
 
     mov ax, os_init_msg
     mov bx, os_version_msg
-    mov cx, 10011111b
+    mov cx, 10101111b
     call os_draw_background
 
     call os_file_selector

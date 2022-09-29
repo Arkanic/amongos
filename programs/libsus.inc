@@ -50,7 +50,7 @@ os_print_2hex equ  005dh
 os_print_4hex equ  0060h
 os_input_string equ  0063h
 
-os_command_line equ  0066h
+UNUSED1 equ  0066h
 
 os_string_length equ  0069h
 os_string_reverse equ  006Ch

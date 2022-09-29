@@ -1,7 +1,7 @@
 [bits 16]
 
-%DEFINE AMONGOS_VER "1.0"
-%DEFINE AMONGOS_API_VER 1
+%DEFINE AMONGOS_VER '1.0'
+%DEFINE AMONGOS_API_VER 16
 
 disk_buffer equ 24576
 
@@ -44,7 +44,7 @@ os_call_vectors:
     jmp os_print_4hex ; 60
     jmp os_input_string ; 63
 
-    jmp os_command_line ; 66
+    jmp os_main ; 66 UNUSED1
 
     jmp os_string_length ; 69
     jmp os_string_reverse ; 6C
@@ -82,7 +82,7 @@ os_main:
     cli
     mov ax, 0
     mov ss, ax
-    mov sp, 0xffff
+    mov sp, 0xFFFF
     sti
 
     cld
@@ -112,7 +112,6 @@ no_change:
     int 0x10
 
     call os_seed_random
-    call os_clear_screen
 
     mov ax, autorun_bin_filename
     call os_file_exists
@@ -123,35 +122,14 @@ no_change:
     jmp execute_bin_program
 
 no_autorun_bin:
+    jmp app_selector
 
-option_screen:
-    mov ax, os_init_msg
-    mov bx, os_version_msg
-    mov cx, 10011111b
-    call os_draw_background
-
-    mov ax, dialog_1
-    mov bx, dialog_2
-    mov cx, dialog_3
-    mov dx, 1
-    call os_dialog_box
-
-    cmp ax, 1
-    jne near app_selector
-
-    call os_clear_screen
-    call os_command_line
-
-    jmp option_screen
-
-    os_init_msg: db "AMOG SUS!!!!", 0
-    os_version_msg: db "Version ", AMONGOS_VER, 0
-
-    dialog_1: db "welcome to amongos", 0
-    dialog_2: db "OK for program menu", 0
-    dialog_3: db "Cancel for cli", 0
+    os_init_msg: db "Welcome to AmongOS", 0
+    os_version_msg: db "Version", AMONGOS_VER, 0
 
 app_selector:
+    call os_clear_screen
+
     mov ax, os_init_msg
     mov bx, os_version_msg
     mov cx, 10011111b
@@ -159,12 +137,12 @@ app_selector:
 
     call os_file_selector
 
-    jc option_screen
+    jc app_selector
 
     mov si, ax
     mov di, kernel_filename
     call os_string_compare
-    jc no_kernel_execute ; naughty
+    jc no_kernel_execute
 
     push si
 
@@ -206,9 +184,9 @@ execute_bin_program:
     jmp app_selector
 
 no_kernel_execute:
-    mov ax, kernel_exec_1
-    mov bx, kernel_exec_2
-    mov cx, kernel_exec_3
+    mov ax, kernelne_1
+    mov bx, kernelne_2
+    mov cx, kernelne_3
     mov dx, 0
     call os_dialog_box
 
@@ -231,21 +209,19 @@ not_bin_extension:
 
     bin_ext: db "BIN"
 
-    kernel_exec_1: db "Did the bro really", 0
-    kernel_exec_2: db "just try and", 0
-    kernel_exec_3: db "run the kernel in the kernel?", 0
+    kernelne_1: db "Cant run kernel", 0
+    kernelne_2: db "In the kernel", 0
+    kernelne_3: db "Dummy", 0
 
-    ext_1: db "Invalid file type!", 0
-    ext_2: db "You can only run BIN programs.", 0
+    ext_1: db "Invalid filename!", 0
+    ext_2: db "Only .BIN files can be run!", 0
 
 fmt_12_24: db 0
 fmt_date: db 0, '/'
 
-
-%include "./system/features/misc.s"
-%include "./system/features/disk.s"
 %include "./system/features/screen.s"
-%include "./system/features/cli.s"
-%include "./system/features/string.s"
+%include "./system/features/disk.s"
 %include "./system/features/keyboard.s"
 %include "./system/features/math.s"
+%include "./system/features/misc.s"
+%include "./system/features/string.s"

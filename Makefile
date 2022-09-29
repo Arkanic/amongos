@@ -9,7 +9,7 @@ all: clean qemu
 qemu: .tmp
 	qemu-system-i386 -fda among.flp -nographic
 
-.tmp: among.flp $(PROG_DIR)/*.bin
+.tmp: among.flp $(BIN_FILES)
 	touch .tmp
 
 among.flp: system/boot/boot.bin system/among.bin
@@ -28,4 +28,6 @@ $(PROG_DIR)/%.bin: $(PROG_DIR)/%.s
 	mcopy -i among.flp $@ ::
 
 clean:
+	echo $(SRC_FILES)
+	echo $(BIN_FILES)
 	rm .tmp *.flp system/*.bin system/boot/*.bin programs/*.bin || true

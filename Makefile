@@ -1,16 +1,21 @@
 SFLAGS=-O0
 
 PROG_DIR:=./programs
-SRC_FILES:=$(wildcard $(PROG_DIR)/*.s)
-BIN_FILES:=$(patsubst $(PROG_DIR)/%.s,$(PROG_DIR)/%.bin,$(SRC_FILES))
+PROG_SRC_FILES:=$(wildcard $(PROG_DIR)/*.s)
+PROG_BIN_FILES:=$(patsubst $(PROG_DIR)/%.s,$(PROG_DIR)/%.bin,$(PROG_SRC_FILES))
+
+LOOSE_DIR:=./loose
+LOOSE_FILES:=$(wildcard $(LOOSE_DIR)/*.*)
 
 all: clean qemu
 
 qemu: .tmp
 	qemu-system-i386 -fda among.flp -nographic
 
-.tmp: among.flp $(BIN_FILES)
+.tmp: among.flp $(PROG_BIN_FILES)
 	touch .tmp
+
+	mcopy -i among.flp loose/*.* ::
 
 among.flp: system/boot/boot.bin system/among.bin
 	rm among.flp || true
@@ -28,6 +33,4 @@ $(PROG_DIR)/%.bin: $(PROG_DIR)/%.s
 	mcopy -i among.flp $@ ::
 
 clean:
-	echo $(SRC_FILES)
-	echo $(BIN_FILES)
 	rm .tmp *.flp system/*.bin system/boot/*.bin programs/*.bin || true

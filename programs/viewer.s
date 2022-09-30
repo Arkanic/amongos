@@ -2,21 +2,6 @@
 %include "./programs/libsus.inc"
 [org 32768]
 
-init_start:
-	mov dh, 1
-	mov dl, 0
-	call os_move_cursor
-
-	mov si, init_msg
-	call os_print_string
-
-	call os_wait_for_key
-
-	jmp main_start
-
-init_msg: db "Crewmate file viewer", 13, 10, ".TXT and .PCX supported, pick a file to continue", 13, 10, 13, 10, "PRESS ANY KEY TO CONTINUE", 0
-
-
 main_start:
 	call draw_background
 
@@ -46,11 +31,13 @@ main_start:
 	rep cmpsb
 	je valid_pcx_extension
 
-	mov dx, 0
+	mov dx, 1
 	mov ax, err_string
-	mov bx, 0
-	mov cx, 0
+	mov cx, err_string_2
 	call os_dialog_box
+
+	cmp ax, 1
+	jne near valid_txt_extension
 
 	jmp main_start
 
@@ -236,6 +223,7 @@ txt_extension: db "TXT", 0
 pcx_extension: db "PCX", 0
 
 err_string: db "File type not supported!", 0
+err_string_2: db "Open anyway?", 0
 
 title_msg: db "Crewmate File Viewer", 0
 footer_msg: db "esc = exit, scroll = up/down", 0

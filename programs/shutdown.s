@@ -16,6 +16,14 @@ start:
 
 shutdown:
     call os_clear_screen
+
+    mov dh, 1
+    mov dl, 1
+    call os_move_cursor
+
+    mov si, msg
+    call os_print_string
+
     cli
     hlt
     jmp $
@@ -23,3 +31,5 @@ shutdown:
 ask_1: db "OK to shutdown", 0
 ask_2: db "amongos", 0
 ask_3: db " ", 0
+
+msg: db "sus", 0

@@ -125,7 +125,7 @@ no_autorun_bin:
     jmp app_selector
 
     os_init_msg: db "Welcome to AmongOS", 0
-    os_version_msg: db "Version", AMONGOS_VER, 0
+    os_version_msg: db "Version ", AMONGOS_VER, 0
 
 app_selector:
     call os_clear_screen

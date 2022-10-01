@@ -12,8 +12,8 @@ start:
     mov si, msg1
     call os_print_string
 
-    mov dh, 1
-    mov dl, 0
+    mov dh, 0
+    mov dl, 1
 
     mov si, msg2
     call os_print_string

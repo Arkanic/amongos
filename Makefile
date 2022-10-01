@@ -9,8 +9,8 @@ LOOSE_FILES:=$(wildcard $(LOOSE_DIR)/*.*)
 
 all: clean qemu
 
-qemu: among.iso
-	qemu-system-i386 -cdrom among.iso -nographic
+qemu: .tmp
+	qemu-system-i386 -fda among.flp -nographic
 
 among.iso: .tmp
 	mkisofs -quiet -V "AMONGOS" -input-charset iso8859-1 -o among.iso -b among.flp .

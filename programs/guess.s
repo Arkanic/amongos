@@ -20,19 +20,9 @@ game_loop:
     call os_clear_screen
     call draw_background
 
-    mov dx, 0
-    mov ax, input_number_msg
-    mov bx, 0
-    mov cx, 0
-    call os_dialog_box
-
-    call os_clear_screen
-    mov dh, 0
-    mov dl, 1
-    call os_move_cursor
-
+    mov bx, input_number_msg
     mov ax, numinput
-    call os_input_string
+    call os_input_dialog
 
     mov si, ax
     call os_string_to_int

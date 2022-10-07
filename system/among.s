@@ -78,6 +78,19 @@ os_call_vectors:
     jmp os_bcd_to_int ; ba
     jmp os_long_int_negate ; bd
 
+    jmp os_port_byte_out ; c0
+    jmp os_port_byte_in ; c3
+    jmp os_serial_port_enable ; c6
+    jmp os_send_via_serial ; c9
+    jmp os_get_via_serial ; cc
+
+    jmp os_speaker_tone ; cf
+    jmp os_speaker_off ; d2
+
+nop
+nop
+nop
+
 os_main:
     cli
     mov ax, 0
@@ -225,3 +238,5 @@ fmt_date: db 0, '/'
 %include "./system/features/math.s"
 %include "./system/features/misc.s"
 %include "./system/features/string.s"
+%include "./system/features/ports.s"
+%include "./system/features/sound.s"

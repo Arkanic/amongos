@@ -83,3 +83,12 @@ os_seed_random equ  00b4h
 os_get_random equ  00b7h
 os_bcd_to_int equ  00bah
 os_long_int_negate equ  00bdh
+
+os_port_byte_out equ  00c0h
+os_port_byte_in equ  00c3h
+os_serial_port_enable equ  00c6h
+os_send_via_serial equ  00c9h
+os_get_via_serial equ  00cch
+
+os_speaker_tone equ  00cfh
+os_speaker_off equ  00d2h

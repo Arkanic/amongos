@@ -87,6 +87,10 @@ os_call_vectors:
     jmp os_speaker_tone ; cf
     jmp os_speaker_off ; d2
 
+    jmp os_vga_enable ; d5
+    jmp os_vga_disable ; d8
+    jmp os_vga_pixel ; da
+
 nop
 nop
 nop
@@ -240,3 +244,4 @@ fmt_date: db 0, '/'
 %include "./system/features/string.s"
 %include "./system/features/ports.s"
 %include "./system/features/sound.s"
+%include "./system/features/vga.s"

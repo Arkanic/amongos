@@ -29,6 +29,10 @@ game_loop:
 
     call draw_background
 
+    mov word cx, [guesses]
+    inc cx
+    mov word [guesses], cx
+
     mov word bx, [randomnum]
     cmp ax, bx
     je .win
@@ -36,6 +40,12 @@ game_loop:
     jge .high
 
 .win:
+    mov word ax, [guesses]
+    call os_int_to_string
+    mov si, ax
+    mov di, guesses_str
+    call os_string_copy
+
     mov dx, 1
     mov ax, win_msg_1
     mov bx, win_msg_2
@@ -81,8 +91,9 @@ title_msg: db "Guessing game", 0
 footer_msg: db "sus!", 0
 input_number_msg: db "Please input your number", 0
 win_msg_1: db "You win!!!", 0
-win_msg_2: db "OK to play again,", 0
-win_msg_3: db "Cancel to quit.", 0
+win_msg_2: db "OK to play again, cancel to exit", 0
+win_msg_3: db "Guesses: "
+guesses_str: times 7 db 0
 small_msg: db "Number is too small!", 0
 high_msg: db "Number is too high!", 0
 

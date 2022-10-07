@@ -5,8 +5,7 @@
 start:
     call os_speaker_tone
 
-    mov ax, 10
-    call os_pause
+    call os_wait_for_key
 
     call os_speaker_off
 

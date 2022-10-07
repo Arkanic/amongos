@@ -92,3 +92,7 @@ os_get_via_serial equ  00cch
 
 os_speaker_tone equ  00cfh
 os_speaker_off equ  00d2h
+
+os_vga_enable equ  00d5h
+os_vga_disable equ  00d8h
+os_vga_pixel equ  00dah

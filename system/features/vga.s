@@ -79,7 +79,7 @@ os_vga_rectangle:
 
     inc bh
     cmp bh, bl
-    jl .end
+    ja .end
 
     jmp .loop
 

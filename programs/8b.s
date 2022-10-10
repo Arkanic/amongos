@@ -86,12 +86,12 @@ draw_row:
 	mov [.count], ax
 
 .loop:
-	mov cx, [.count]
-	call draw_pixel
-
 	mov ax, [.count]
 	cmp ax, [img_width]
 	je .end
+
+	mov cx, [.count]
+	call draw_pixel
 
 	inc ax
 	mov [.count], ax
@@ -124,6 +124,7 @@ draw_pixel:
 	push ax
 	mov ax, [img_height]
 	sub ax, dx
+	sub ax, 1
 	mov dx, ax
 	pop ax
 	call os_vga_pixel

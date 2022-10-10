@@ -60,7 +60,7 @@ valid_extension:
 
 	mov ax, [counter]
 	cmp ax, [img_height]
-	ja .end
+	je .end
 
 	inc ax
 	mov [counter], ax
@@ -90,8 +90,8 @@ draw_row:
 	call draw_pixel
 
 	mov ax, [.count]
-	cmp ax, [img_width + 1]
-	ja .end
+	cmp ax, [img_width]
+	je .end
 
 	inc ax
 	mov [.count], ax
@@ -121,6 +121,11 @@ draw_pixel:
 
 	pop cx
 	pop dx
+	push ax
+	mov ax, [img_height]
+	sub ax, dx
+	mov dx, ax
+	pop ax
 	call os_vga_pixel
 
 	popa

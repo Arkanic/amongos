@@ -4,13 +4,9 @@
 
 start:
     call os_vga_enable
-
-    mov cx, 0
-    mov bh, 0
-    mov dx, 320
-    mov bl, 200
-    mov al, 0x0f
-    call os_vga_rectangle
+    
+    mov al, 0x09
+    call os_vga_background
 
     mov cx, 10
     mov dx, 5
@@ -34,6 +30,22 @@ start:
     mov dx, 190
     mov al, 4
     call os_vga_pixel
+
+    mov cx, 0
+    mov dx, 150
+    mov al, 0
+.loop:
+    call os_vga_pixel
+
+    inc cx
+    inc al
+
+    cmp cx, 255
+    jge .end
+
+    jmp .loop
+
+.end:
 
     call os_wait_for_key
     call os_vga_disable

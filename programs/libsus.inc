@@ -98,3 +98,4 @@ os_vga_disable equ  00d8h
 os_vga_pixel equ  00dbh
 os_vga_rectangle equ  00deh
 os_vga_horiz_line equ  00e1h
+os_vga_background equ  00e4h

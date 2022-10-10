@@ -34,6 +34,9 @@ START:
     mov ax, 0x7c0
     mov ds, ax
 
+    mov si, kern_load
+    call print_string
+
     cmp dl, 0
     je no_change
     mov [bootdev], dl
@@ -265,8 +268,9 @@ l2hts:
 
 kernel_filename: db "AMONG   BIN"
 
-disk_error: db "Floppy error! Press any key...", 0
-file_not_found: db "AMONG.BIN not found!", 0
+disk_error: db "Floppy err!", 0
+file_not_found: db "Kernel not found!", 0
+kern_load: db "Loading AMONGOS...", 0
 
 bootdev db 0
 cluster dw 0

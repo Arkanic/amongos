@@ -86,3 +86,17 @@ os_vga_rectangle:
 .end:
     popa
     ret
+
+; draw a solid colour background
+; IN: al = colour
+os_vga_background:
+    pusha
+
+    mov cx, 0
+    mov bh, 0
+    mov dx, 320
+    mov bl, 200
+    call os_vga_rectangle
+
+    popa
+    ret

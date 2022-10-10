@@ -95,4 +95,6 @@ os_speaker_off equ  00d2h
 
 os_vga_enable equ  00d5h
 os_vga_disable equ  00d8h
-os_vga_pixel equ  00dah
+os_vga_pixel equ  00dbh
+os_vga_rectangle equ  00deh
+os_vga_horiz_line equ  00e1h

@@ -1,42 +1,21 @@
 ; arkanic addon to mikeos kernel libraries
 ; generic canvas paint-like commands for VGA 320x200 graphics
 
-
 ; turn on vga mode
-; IN/OUT: ax = 0 for success, 1 = vga already on
 os_vga_enable:
     pusha
 
-    cmp word [vga_on], 0
-    jne .fail
+    mov ah, 00h
+    mov al, 13h
 
-    mov ah, 0
-    mov al, 0x13
     int 0x10
 
-    jmp .success
-
-.fail:
     popa
-    mov ax, 1
-    jmp .end
-.success:
-    mov word [vga_on], 1
-
-    popa
-
-    mov ax, 0
-
-.end:
     ret
 
 ; turn off vga mode
-; IN/OUT: ax = 0 for success, 1 = vga already off
 os_vga_disable:
     pusha
-
-    cmp word [vga_on], 1
-    jne .fail
 
     mov ax, 3
     mov bx, 0
@@ -44,39 +23,66 @@ os_vga_disable:
     mov ax, 0x1003
     int 0x10
 
-    jmp .success
-
-.fail:
     popa
-    mov ax, 1
-    jmp .end
-.success:
-    mov word [vga_on], 0
-    popa
-    mov ax, 0
-.end:
     ret
 
-vga_on: db 0
-
 ; draw pixel
-; IN=ax = x, bx = y, dl = colour
+; IN=cx = x, dx = y, al = colour
 os_vga_pixel:
     pusha
 
-    mov cx, 0xA000
-    mov es, cx
+    mov ah, 0ch
+    mov bh, 0
 
-    mov cx, 320
-    mul cx
-    add ax, bx
+    int 10h
 
-    mov di, ax
-    mov dl, 7
-    mov [es:di], dl
+    popa
+    ret
 
-    mov ax, 0x2000
-    mov es, ax
+; draw line at y axis
+; IN: bx = x start, cx = x end, dx = y axis al = colour
+os_vga_horiz_line:
+    pusha
 
+.loop:
+    pusha
+    mov cx, bx
+    call os_vga_pixel
+    popa
+
+    inc bx
+    cmp bx, cx
+    jge .over
+
+    jmp .loop
+
+.over:
+    popa
+    ret
+
+; draw rectangle
+; IN: cx, bh = x y start; dx, bl = x y end, al = colour
+os_vga_rectangle:
+    pusha
+
+.loop:
+    pusha
+    push ax
+    mov ax, dx
+    mov dh, 0
+    mov dl, bh
+    mov bx, cx
+    mov cx, ax
+    pop ax
+    call os_vga_horiz_line
+    popa
+
+    inc bh
+    cmp bh, bl
+    jl .end
+
+    jmp .loop
+
+.end:
     popa
     ret

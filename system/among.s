@@ -89,7 +89,9 @@ os_call_vectors:
 
     jmp os_vga_enable ; d5
     jmp os_vga_disable ; d8
-    jmp os_vga_pixel ; da
+    jmp os_vga_pixel ; db
+    jmp os_vga_rectangle ; de
+    jmp os_vga_horiz_line ; e1
 
 nop
 nop

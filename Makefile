@@ -7,7 +7,7 @@ PROG_BIN_FILES:=$(patsubst $(PROG_DIR)/%.s,$(PROG_DIR)/%.bin,$(PROG_SRC_FILES))
 LOOSE_DIR:=./loose
 LOOSE_FILES:=$(wildcard $(LOOSE_DIR)/*.*)
 
-all: clean qemu
+all: clean .tmp
 
 qemu: .tmp
 	qemu-system-i386 -fda among.flp -nographic

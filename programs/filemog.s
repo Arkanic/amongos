@@ -1,6 +1,6 @@
 [bits 16]
 %include "./programs/libsus.inc"
-[org 32768]
+[org 16384]
 
 disk_buffer equ 24576
 

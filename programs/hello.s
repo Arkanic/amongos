@@ -1,6 +1,6 @@
 [bits 16]
 %include "./programs/libsus.inc"
-[org 32768]
+[org 16384]
 
 start:
     call os_clear_screen

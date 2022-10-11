@@ -1,8 +1,6 @@
 [bits 16]
 %include "./programs/libsus.inc"
-[org 32768]
-
-bmp_start equ 36864
+[org 16384]
 
 start:
     mov ax, title_msg
@@ -34,7 +32,7 @@ valid_extension:
 	call os_clear_screen
 
 	mov ax, bx
-	mov cx, 36864 ; 4k after program start
+	mov cx, bmp_start ; 4k after program start
 	call os_load_file
 
 	mov al, [bmp_start + 0xa]
@@ -140,3 +138,9 @@ title_msg: db "8B BMP viewer", 0
 footer_msg: db " ", 0
 
 bmp_extension: db "BMP", 0
+
+nop
+nop
+nop
+
+bmp_start:

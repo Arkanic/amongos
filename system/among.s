@@ -137,7 +137,7 @@ no_change:
     call os_file_exists
     jc no_autorun_bin
 
-    mov cx, 32768
+    mov cx, 16384
     call os_load_file
     jmp execute_bin_program
 
@@ -185,7 +185,7 @@ app_selector:
     pop si
 
     mov ax, si
-    mov cx, 32768
+    mov cx, 16384
     call os_load_file
 
 execute_bin_program:
@@ -198,7 +198,7 @@ execute_bin_program:
     mov si, 0
     mov di, 0
 
-    call 32768
+    call 16384
 
     call os_clear_screen
     jmp app_selector

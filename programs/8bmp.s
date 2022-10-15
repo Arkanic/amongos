@@ -49,6 +49,9 @@ valid_extension:
 
 	call os_vga_enable
 
+	mov al, 0x08
+	call os_vga_background
+
 	mov ax, 0
 	mov [counter], ax
 

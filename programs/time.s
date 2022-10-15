@@ -16,6 +16,7 @@ start:
     call os_get_date_string
     mov ax, bx
 
+    mov bx, 0
     call os_get_time_string
     
     mov cx, 0

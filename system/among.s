@@ -223,18 +223,18 @@ not_bin_extension:
 
     jmp app_selector
 
-    kernel_filename: db "AMONG.BIN", 0
+kernel_filename: db "AMONG.BIN", 0
 
-    autorun_bin_filename: db "AUTORUN.BIN", 0
+autorun_bin_filename: db "AUTORUN.BIN", 0
 
-    bin_ext: db "BIN"
+bin_ext: db "BIN"
 
-    kernelne_1: db "Cant run kernel", 0
-    kernelne_2: db "In the kernel", 0
-    kernelne_3: db "Dummy", 0
+kernelne_1: db "Cant run kernel", 0
+kernelne_2: db "In the kernel", 0
+kernelne_3: db "Dummy", 0
 
-    ext_1: db "Invalid filename!", 0
-    ext_2: db "Only .BIN files can be run!", 0
+ext_1: db "Invalid filename!", 0
+ext_2: db "Only .BIN files can be run!", 0
 
 fmt_12_24: db 0
 fmt_date: db 0, '/'

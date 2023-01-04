@@ -7,6 +7,7 @@
 
 ; ------------------------------------------------------------------
 ; os_get_api_version -- Return current version of MikeOS API
+; provides interface for programs that do not have access to AMONGOS_API_VER constant during compilation
 ; IN: Nothing; OUT: AL = API version number
 
 os_get_api_version:

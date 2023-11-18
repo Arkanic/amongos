@@ -31,13 +31,13 @@ start:
     mov al, 4
     call os_vga_pixel
 
-    mov cx, 50
-    mov dx, 50
+    mov cx, 0
+    mov dx, 0
     mov al, 0
 .loop:
     call os_vga_pixel
 
-    cmp cx, 7
+    cmp cx, 16
     jne .loop_incx
     ; inc y
     mov cx, 0
@@ -50,7 +50,7 @@ start:
 .loop_cont:
     inc al
 
-    cmp dx, 58
+    cmp dx, 16
     jge .end
 
     jmp .loop
